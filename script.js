@@ -1,0 +1,20 @@
+let money = +prompt("Ваш бюджет на месяц?", "100");
+let time = prompt ("Введите дату в формате YYYY-MM-DD", "2023-09-29");
+let firstExpensesItem = prompt("Введите обязательную статью расходов в этом месяце", "Rent appart");
+let firstExpensesMoney = +prompt("Во сколько обойдется?", "1000");
+let secondExpensesItem = prompt("Введите обязательную статью расходов в этом месяце", "Food");
+let secondExpensesMoney = +prompt("Во сколько обойдется?", "500");
+
+let appData = {
+    budget: money,
+    timeData: time,
+    expenses: {
+        firstExpensesItem:firstExpensesMoney,
+        secondExpensesItem:secondExpensesMoney
+    },
+    optionalExpenses: 0,
+    income:[],
+    saving:false
+}
+
+alert(money/30)
