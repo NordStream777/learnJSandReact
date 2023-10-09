@@ -1,42 +1,35 @@
-// let money = +prompt("Ваш бюджет на месяц?", "100");
-// let time = prompt ("Введите дату в формате YYYY-MM-DD", "2023-09-29");
-// let firstExpensesItem = prompt("Введите обязательную статью расходов в этом месяце", "Rent appart");
-// let firstExpensesMoney = +prompt("Во сколько обойдется?", "1000");
-// let secondExpensesItem = prompt("Введите обязательную статью расходов в этом месяце", "Food");
-// let secondExpensesMoney = +prompt("Во сколько обойдется?", "500");
+let money = +prompt("Ваш бюджет на месяц?", "100");
+let time = prompt ("Введите дату в формате YYYY-MM-DD", "2023-09-29");
 
-// let appData = {
-//     budget: money,
-//     timeData: time,
-//     expenses: {
-//         firstExpensesItem:firstExpensesMoney,
-//         secondExpensesItem:secondExpensesMoney
-//     },
-//     optionalExpenses: 0,
-//     income:[],
-//     saving:false
-// }
+let appData = {
+    budget: money,
+    timeData: time,
+    expenses: {},
+    optionalExpenses: {},
+    income:[],
+    saving:false
+}
 
-// alert(money/30)
 
-// // В Js существует 7 типов данных 
-// 1) String - строка
-// 2) Number - число 
-// 3) [] - объекты 
-// 4) false/true - буленивый типо
-// 5) undefined - переменная есть, но не задано значение
-// 6) null
-// 7) Symbol
+console.log(appData.budget/30);
 
-// Как вывести информацию в консоль?
+for (let i = 0; i < 2; i++) {
+    
+    let a = prompt("Введите обязательную статью расходов в этом месяце");
+    let b = prompt("Во сколько обойдется?");
 
-// Необходимо написать console.log (и вставить сюда данные)
+    if( (typeof(a)) ==='string'  && (typeof(a)) != null && (typeof(b)) != null
+    && a != '' && b != '' && a.length < 50){
+        console.log('done');
+        appData.expenses[a] = b;
+    }
+    else{
+        alert('Write correct nubmer')
+        i= i-1;
+        console.log('done2');
+    }
+}
 
-// Какая функция операторов || и &&?
+appData.moneyPerDay = appData.budget / 30;
 
-// || - логическое "или", true,если один из операндов true
-// && - логическое "и", true, если все операнды true
 
-a = [1, 2, 3]; 
-b = [1, 2, 3];
-console.log( 0 || "" || 2 || undefined || true || falsе)
