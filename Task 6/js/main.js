@@ -44,53 +44,69 @@ startBtn.addEventListener('click', function(){
 
 
 expensesBtn.addEventListener('click', function(){
-    let sum = 0;
-
+    if (!budgetValue.textContent){
+        expensesBtn.disabled = true;
+    }else {
+        expensesBtn.disabled = false;
+        let sum = 0;
         for (let i = 0; i < expensesItem.length; i++) {
             let a = expensesItem[i].value,
                 b = expensesItem[++i].value;
         
             if ( typeof(a)==='string' && typeof(a) != null && typeof(b) != null && a != "" && b != "" && a.length < 50) {
-                console.log ("done");
         
                 appData.expenses[a] = b;
                 sum += +b;
             } else {
-                console.log ("bad result");
                 i--;
             }
         }
         expensesValue.textContent = sum;
+    }
 });
 
 optionalExpensesBtn.addEventListener('click', function(){
 
-    for (let i = 1; i < optionalExpensesItem.length; i++) {
-        let opt = optionalExpensesItem[i].value;
-        appData.optionalExpenses[i] = opt;
-        optionalExpensesValue.textContent += appData.optionalExpenses[i] + '';
+    if (!budgetValue.textContent){
+        optionalExpensesBtn.disabled = true;
     }
+
+    else {
+        optionalExpensesBtn.disabled = false;
+        for (let i = 1; i < optionalExpensesItem.length; i++) {
+            let opt = optionalExpensesItem[i].value;
+            appData.optionalExpenses[i] = opt;
+            optionalExpensesValue.textContent += appData.optionalExpenses[i] + '';
+        }
+    }
+
 });
 
 countBtn.addEventListener('click', function(){
-
-    if(appData.budget != undefined){
-
-        appData.moneyPerDay = (appData.budget / 30).toFixed();
-        dayBudgetValue.textContent = appData.moneyPerDay;
-
-        if (appData.moneyPerDay < 100) {
-            levelValue.textContent = "Это минимальный уровень достатка!";
-        } else if (appData.moneyPerDay > 100 && appData.moneyPerDay < 2000) {
-            levelValue.textContent = "Это средний уровень достатка!";
-        } else if (appData.moneyPerDay > 2000) {
-            levelValue.textContent = "Это высокий уровень достатка!";
-        } else {
-            levelValue.textContent = "Ошибочка...!";
+        if (!budgetValue.textContent){
+            countBtn.disabled = true
         }
-    } else{
-        dayBudgetValue.textContent = "Ошибочка...!"
-    }
+
+        else{
+            countBtn.disabled = false;
+            if(appData.budget != undefined){
+
+                appData.moneyPerDay = ((appData.budget - expensesValue.textContent) / 30).toFixed();
+                dayBudgetValue.textContent = appData.moneyPerDay;
+        
+                if (appData.moneyPerDay < 100) {
+                    levelValue.textContent = "Это минимальный уровень достатка!";
+                } else if (appData.moneyPerDay > 100 && appData.moneyPerDay < 2000) {
+                    levelValue.textContent = "Это средний уровень достатка!";
+                } else if (appData.moneyPerDay > 2000) {
+                    levelValue.textContent = "Это высокий уровень достатка!";
+                } else {
+                    levelValue.textContent = "Ошибочка...!";
+                }
+            } else{
+                dayBudgetValue.textContent = "Ошибочка...!"
+            }
+        }
     
 });
 
