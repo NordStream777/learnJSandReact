@@ -4,7 +4,8 @@ window.addEventListener("DOMContentLoaded", function(){
 // Табы
     let container = document.querySelector(".info-header");
     let tabs = document.querySelectorAll (".info-header-tab");
-    let dscr = document.querySelectorAll (".info-tabcontent")
+    let dscr = document.querySelectorAll (".info-tabcontent");
+    let descrBtn = document.querySelectorAll('.description-btn');
 
     function tabContentHide(a){
         for (let i = a; i < dscr.length; i++){
@@ -35,9 +36,10 @@ window.addEventListener("DOMContentLoaded", function(){
         }
     })
 
+
 // Таймер
 // Устанавливаем дату, до которой будет идти обратный отсчет (замените эту дату на нужную)
-let countDownDate = Date.parse('2023-10-14');
+let countDownDate = Date.parse('2023-12-31');
 
 let x = setInterval(function() {
 
@@ -56,4 +58,28 @@ let x = setInterval(function() {
     document.getElementById("timer").textContent = "Время истекло!";
     }
 }, 1000);
+
+
+// Модально окно
+
+let btn = document.querySelector(".more");
+let modalWindow = document.querySelector('.overlay');
+let btnClose = document.querySelector('.popup-close');
+
+
+descrBtn.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+        modalWindow.style.display = 'block';
+        this.classList.add("more-splash");
+        document.body.style.overflow = 'hidden';
+    });
+});
+
+btnClose.addEventListener('click', function(){
+    modalWindow.style.display = 'none';
+    btn.classList.remove("more-splash");
+    document.body.style.overflow = '';
+})
+
+
 });
