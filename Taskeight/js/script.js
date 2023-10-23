@@ -81,5 +81,26 @@ btnClose.addEventListener('click', function(){
     document.body.style.overflow = '';
 })
 
+class Options{
+    constructor(height, width, bg, fontSize, textAlign){
+        this.height = height;
+        this.width = width;
+        this.bg = bg;
+        this.fontSize = fontSize;
+        this.textAlign = textAlign;
+    }
+    createElem(text){
+        this.div = document.createElement('div');
+        this.div.textContent = text;
+        this.div.style.cssText = `height : ${this.height}px; width : ${this.width}px; background-color: ${this.bg}; font-size: ${this.fontSize}; text-align : ${this.textAlign} `;
 
+         return document.body.appendChild(this.div);
+    }
+}
+
+let newDiv = new Options(100,300,'blue',14,'center')
+
+console.log(newDiv.createElem("i'm new div"))
 });
+
+
