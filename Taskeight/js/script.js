@@ -75,6 +75,12 @@ descrBtn.forEach(function (btn) {
     });
 });
 
+btn.addEventListener('click', function () {
+    modalWindow.style.display = 'block';
+    this.classList.add("more-splash");
+    document.body.style.overflow = 'hidden';
+});
+
 btnClose.addEventListener('click', function(){
     modalWindow.style.display = 'none';
     btn.classList.remove("more-splash");
