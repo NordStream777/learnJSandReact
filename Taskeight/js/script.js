@@ -1,6 +1,6 @@
 window.addEventListener("DOMContentLoaded", function(){
 
-    'use scrict'
+    'use strict'
 // Табы
     let container = document.querySelector(".info-header");
     let tabs = document.querySelectorAll (".info-header-tab");
@@ -107,6 +107,96 @@ class Options{
 let newDiv = new Options(100,300,'blue',14,'center')
 
 console.log(newDiv.createElem("i'm new div"))
+
+// Отправка данных с формы 
+
+let message = {
+    loading : "Loading",
+    success : "All good",
+    error: "Something wrong"
+}
+
+let form = document.querySelector('.main-form'),
+    input = form.getElementsByTagName('input'),
+    statusMessage = document.createElement('div')
+
+    statusMessage.classList.add('status');
+
+    form.addEventListener('submit', function(event){
+        event.preventDefault();
+        form.appendChild(statusMessage);
+
+        let request = new XMLHttpRequest();
+        request.open("POST", "server.php");
+        request.setRequestHeader ('Content-Type', "application/json; charset=utf-8");
+
+        let formData = new FormData(form);
+
+        let obj = {};
+        formData.forEach(function(value,key){
+            obj[key] = value;
+        });
+
+        let json = JSON.stringify(obj);
+
+        request.send(json);
+
+        request.addEventListener('readystatechange', function(){
+            if (request.readyState < 4){
+                statusMessage.innerHTML = message.loading;
+            } else if (request.readyState === 4 && request.status == 200){
+                statusMessage.innerHTML = message.success;
+            } else {
+                statusMessage.innerHTML = message.error;
+            }
+        });
+
+        for (let i = 0; i < input.length; i++){
+            input[i].value = '';
+        }
+    });
+
+
+    let form2 = document.getElementById('form'),
+        input2 = form2.querySelectorAll('.input');
+
+    form2.addEventListener('submit', function(event){
+        event.preventDefault();
+        form2.appendChild(statusMessage)
+
+        let request = new XMLHttpRequest();
+        request.open("POST", "server.php");
+        request.setRequestHeader ('Content-Type', "application/json; charset=utf-8");
+
+        let formData = new FormData(form2);
+
+        let obj = {};
+        formData.forEach(function(value,key){
+            obj[key] = value;
+        });
+
+        let json = JSON.stringify(obj);
+
+        
+
+        request.send(json);
+
+        request.addEventListener('readystatechange', function(){
+            if (request.readyState < 4){
+                statusMessage.innerHTML = message.loading;
+            } else if (request.readyState === 4 && request.status == 200){
+                statusMessage.innerHTML = message.success;
+            } else {
+                statusMessage.innerHTML = message.error;
+            }
+        });
+
+        for (let i = 0; i < input2.length; i++){
+            input2[i].value = '';
+        }
+
+    })
 });
+
 
 
