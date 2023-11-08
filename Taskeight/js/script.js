@@ -175,6 +175,58 @@ function sendForm(elem) {
 sendForm(form)
 sendForm(form2)
 
+
+// Слайдер
+
+let slideIndex = 2;
+let slides = document.querySelectorAll('.slider-item'),
+    next = document.querySelector('.next'),
+    prev = document.querySelector('.prev'),
+    dots = document.querySelectorAll ('.dot'),
+    dotsWrap = document.querySelector('.slider-dots');
+
+showSlides(slideIndex)
+    
+function showSlides(n){
+    if (n>slides.length){
+        slideIndex = 1;
+    }
+    if (n < 1){
+        slideIndex = slides.length
+    }
+
+    slides.forEach((item)=> item.style.display = 'none')
+
+    dots.forEach((item)=> item.classList.remove('dot-active'));
+
+    slides[slideIndex-1].style.display = 'block'
+    dots[slideIndex-1].classList.add('dot-active')
+}   
+
+function plusSlides(n){
+    showSlides(slideIndex += n);
+}
+
+function currentSlide(n){
+    showSlides(slideIndex = n);
+}
+
+prev.addEventListener('click', function(){
+    plusSlides(-1)
+});
+
+next.addEventListener('click', function(){
+    plusSlides(1)
+});
+
+dotsWrap.addEventListener('click', function(event){
+    for (let i = 0; i < dots.length +1; i++){
+        if (event.target.classList.contains('dot')&& event.target == dots[i-1]){
+            currentSlide(i);
+        }
+    }
+})
+
 });
 
 
