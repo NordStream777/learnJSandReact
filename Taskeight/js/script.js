@@ -117,85 +117,64 @@ let message = {
 }
 
 let form = document.querySelector('.main-form'),
-    input = form.getElementsByTagName('input'),
+    form2 = document.getElementById('form'),
+    input = document.getElementsByTagName('input'),
     statusMessage = document.createElement('div')
-
     statusMessage.classList.add('status');
 
-    form.addEventListener('submit', function(event){
-        event.preventDefault();
-        form.appendChild(statusMessage);
+function sendForm(elem) {
+    elem.addEventListener('submit', function(e){
+        e.preventDefault();
+            elem.appendChild(statusMessage);
+            let formData = new FormData(elem);
+            let obj = {};
+                formData.forEach(function(value,key){
+                obj[key] = value;
 
-        let request = new XMLHttpRequest();
-        request.open("POST", "server.php");
-        request.setRequestHeader ('Content-Type', "application/json; charset=utf-8");
+                });
 
-        let formData = new FormData(form);
+            function postData(data){
+                return new Promise(function(resolve,reject){
+                    let request = new XMLHttpRequest();
 
-        let obj = {};
-        formData.forEach(function(value,key){
-            obj[key] = value;
-        });
+                    request.open("POST", "server.php");
 
-        let json = JSON.stringify(obj);
+                    request.setRequestHeader ('Content-Type', "application/json");
 
-        request.send(json);
+                    request.onreadystatechange = function() {
+                        if (request.readyState === 4) {
+                            if (request.status === 200) {
+                                resolve();
+                            } else {
+                                reject();
+                            }
+                        }
+                    };
 
-        request.addEventListener('readystatechange', function(){
-            if (request.readyState < 4){
-                statusMessage.innerHTML = message.loading;
-            } else if (request.readyState === 4 && request.status == 200){
-                statusMessage.innerHTML = message.success;
-            } else {
-                statusMessage.innerHTML = message.error;
+                let json = JSON.stringify(obj);
+                request.send(json);
+                })
+            }       
+
+
+        function clearInput(){
+            for (let i = 0; i < input.length; i++){
+                input[i].value = '';
             }
-        });
-
-        for (let i = 0; i < input.length; i++){
-            input[i].value = '';
         }
+        postData(formData)
+            .then(()=> statusMessage.innerHTML = message.loading)
+            .then(()=>{
+                statusMessage.innerHTML = message.success;
+            })
+            .catch(()=> statusMessage.innerHTML = message.error)
+            .then(clearInput)
     });
+}
 
+sendForm(form)
+sendForm(form2)
 
-    let form2 = document.getElementById('form'),
-        input2 = form2.querySelectorAll('.input');
-
-    form2.addEventListener('submit', function(event){
-        event.preventDefault();
-        form2.appendChild(statusMessage)
-
-        let request = new XMLHttpRequest();
-        request.open("POST", "server.php");
-        request.setRequestHeader ('Content-Type', "application/json; charset=utf-8");
-
-        let formData = new FormData(form2);
-
-        let obj = {};
-        formData.forEach(function(value,key){
-            obj[key] = value;
-        });
-
-        let json = JSON.stringify(obj);
-
-        
-
-        request.send(json);
-
-        request.addEventListener('readystatechange', function(){
-            if (request.readyState < 4){
-                statusMessage.innerHTML = message.loading;
-            } else if (request.readyState === 4 && request.status == 200){
-                statusMessage.innerHTML = message.success;
-            } else {
-                statusMessage.innerHTML = message.error;
-            }
-        });
-
-        for (let i = 0; i < input2.length; i++){
-            input2[i].value = '';
-        }
-
-    })
 });
 
 
