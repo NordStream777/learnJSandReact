@@ -227,6 +227,48 @@ dotsWrap.addEventListener('click', function(event){
     }
 })
 
+// Calculator
+
+let persons = document.querySelectorAll('.counter-block-input')[0],
+    restDays = document.querySelectorAll('.counter-block-input')[1],
+    place = document.getElementById('select'),
+    totalValue = document.getElementById('total'),
+    daysSum = 0,
+    personsSum = 0,
+    total = 0; 
+
+totalValue.innerHTML = 0;
+
+function calculateTotal() {
+    total = (daysSum + personsSum) * 4000;
+
+    if (daysSum == '' || personsSum == '') {
+        totalValue.innerHTML = 'Введите числовые значения';
+    } else {
+        totalValue.innerHTML = total;
+    }
+}
+
+persons.addEventListener('change', function(){
+    personsSum = +this.value;
+    calculateTotal();
+});
+
+restDays.addEventListener('change', function(){
+    daysSum = +this.value;
+    calculateTotal();
+});
+
+place.addEventListener('change', function(){
+    if (restDays.value == '' || persons.value == ''){
+        totalValue.innerHTML = 0 
+    } else {
+        calculateTotal();
+        let a = total;
+        totalValue.innerHTML = a * this.options[this.selectedIndex].value;
+    }
+} )
+
 });
 
 
